@@ -1,30 +1,47 @@
-# Syncfusion Flutter Core
+![syncfusion_flutter_chart_banner](https://cdn.syncfusion.com/content/images/FTControl/Flutter-Charts-Graphs.png)
 
-Syncfusion Flutter Core is a dependent package for the following Syncfusion Flutter widgets.
+# Syncfusion Flutter Charts
 
+Syncfusion Flutter Charts is a data visualization library written natively in Dart for creating beautiful and high-performance charts, which are used to craft high-quality mobile app user interfaces using Flutter.
 
-* [syncfusion_flutter_datagrid](https://pub.dev/packages/syncfusion_flutter_datagrid)
-* [syncfusion_flutter_charts](https://pub.dev/packages/syncfusion_flutter_charts)
-* [syncfusion_flutter_calendar](https://pub.dev/packages/syncfusion_flutter_calendar)
-* [syncfusion_flutter_gauges](https://pub.dev/packages/syncfusion_flutter_gauges)
-* [syncfusion_flutter_datepicker](https://pub.dev/packages/syncfusion_flutter_datepicker)
-* [syncfusion_flutter_pdf](https://pub.dev/packages/syncfusion_flutter_pdf)
-* [syncfusion_flutter_sliders](https://pub.dev/packages/syncfusion_flutter_sliders)
-* [syncfusion_flutter_barcodes](https://pub.dev/packages/syncfusion_flutter_barcodes)
-* [syncfusion_flutter_maps](https://pub.dev/packages/syncfusion_flutter_maps)
-* [syncfusion_localizations](https://pub.dev/packages/syncfusion_localizations)
+## Overview
+
+Create various types of cartesian or circular charts with seamless interaction, responsiveness, and smooth animation. It has a rich set of features, and it is completely customizable and extendable.
 
 **Disclaimer:** This is a commercial package. To use this package, you need to have either Syncfusion Commercial License or Syncfusion Community license. For more details, please check the [LICENSE](https://github.com/syncfusion/flutter-examples/blob/master/LICENSE) file.
 
 **Note:** Our packages are now compatible with Flutter for Web. However, this will be in Beta until Flutter for Web becomes stable.
 
 ## Table of contents
+- [Chart features](#chart-features)
 - [Get the demo application](#get-the-demo-application)
-- [Other useful links](#other-useful-links)
+- [Useful links](#useful-links)
+- [Installation](#installation)
+- [Getting started](#getting-started)
+  - [Add chart to the widget tree](#add-chart-to-the-widget-tree)
+  - [Bind data source](#bind-data-source)
+  - [Add chart elements](#add-chart-elements)
 - [Support and Feedback](#support-and-feedback)
 - [About Syncfusion](#about-syncfusion)
 
-## Get the Demo application
+## Chart features
+
+* **Chart types** - Provides functionality for rendering 25+ chart types, namely line, spline, column, bar, area, bubble, scatter, step line, fast line, range column, range area, step area, spline area, stacked charts, 100% stacked charts, pie, doughnut, radial bar, pyramid, funnel, etc. Each chart type is easily configured and customized with built-in features for creating stunning visual effects.
+![flutter_chart_types](https://cdn.syncfusion.com/content/images/FTControl/Charts/charttypes_till_100Stacked_series.png)
+
+* **Axis types** - Plot various types of data in a graph with the help of numeric, category, date-time and log axis types. The built-in axis features allow to customize an axis elements further to make the axis more readable.
+![flutter_chart_axis_types](https://cdn.syncfusion.com/content/images/FTControl/chart-axis-types.png)
+
+* **User interaction** - The end-user experience is greatly enhanced by including the user interaction features such as zooming and panning, crosshair, trackball, events, selection, and tooltip in chart.
+![flutter_chart_user_interactions](https://cdn.syncfusion.com/content/images/FTControl/chart-user-interaction.gif)
+
+* **Legends** - Display additional information about the chart series. The chart legend can also be used to collapse the series. The legends can be wrapped or scrolled if an item exceeds the available bounds.
+![flutter_chart_legend](https://cdn.syncfusion.com/content/images/FTControl/Charts/legends.png)
+
+* **Dynamic update** - Updates the chart dynamically with live data that changes over seconds or minutes like stock prices, temperature, speed, etc.
+![flutter_chart_user_interactions](https://cdn.syncfusion.com/content/images/FTControl/Charts/live_updates.gif)
+
+## Get the demo application
 
 Explore the full capabilities of our Flutter widgets on your device by installing our sample browser applications from the below app stores, and view samples code in GitHub.
 
@@ -38,12 +55,133 @@ Explore the full capabilities of our Flutter widgets on your device by installin
 </p>
 
 ## Other useful links
-Take a look at the following to learn more about Syncfusion Flutter widgets:
+Take a look at the following to learn more about Syncfusion Flutter charts:
 
-* [Syncfusion Flutter product page](https://www.syncfusion.com/flutter-widgets)
-* [User guide documentation](https://help.syncfusion.com/flutter/introduction/overview)
-* [Video tutorials](https://www.syncfusion.com/tutorial-videos/flutter)
+* [Syncfusion Flutter Charts product page](https://www.syncfusion.com/flutter-widgets/flutter-charts)
+* [User guide documentation](https://help.syncfusion.com/flutter/chart/overview)
+* [Video tutorials](https://www.syncfusion.com/tutorial-videos/flutter/charts)
 * [Knowledge base](https://www.syncfusion.com/kb)
+## Installation
+
+Install the latest version from [pub](https://pub.dartlang.org/packages/syncfusion_flutter_charts#-installing-tab-).
+
+## Getting started
+
+Import the following package.
+
+```dart
+import 'package:syncfusion_flutter_charts/charts.dart';
+```
+### Add chart to the widget tree
+
+Add the chart widget as a child of any widget. Here, the chart widget is added as a child of container widget.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+        child: Container(
+          child: SfCartesianChart(
+          )
+        )
+      )
+  );
+}
+```
+### Bind data source
+
+Based on data, initialize the appropriate axis type and series type. In the series, map the data source and the fields for x and y data points. To render a line chart with category axis, initialize appropriate properties.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+        child: Container(
+          child: SfCartesianChart(
+            // Initialize category axis
+            primaryXAxis: CategoryAxis(),
+
+            series: <LineSeries<SalesData, String>>[
+              LineSeries<SalesData, String>(
+                // Bind data source
+                dataSource:  <SalesData>[
+                  SalesData('Jan', 35),
+                  SalesData('Feb', 28),
+                  SalesData('Mar', 34),
+                  SalesData('Apr', 32),
+                  SalesData('May', 40)
+                ],
+                xValueMapper: (SalesData sales, _) => sales.year,
+                yValueMapper: (SalesData sales, _) => sales.sales
+              )
+            ]
+          )
+        )
+      )
+  );
+}
+
+class SalesData {
+  SalesData(this.year, this.sales);
+  final String year;
+  final double sales;
+}
+
+```
+
+**Note**
+
+* Use `SfCartesianChart` widget to render line, spline, area, column, bar, bubble, scatter, step line, and fast line charts.
+* Use `SfCircularChart` widget to render pie, doughnut, and radial bar charts.
+* Use `SfPyramidChart` and `SfFunnelChart` to render pyramid and funnel charts respectively.
+
+### Add chart elements
+
+Add the chart elements such as title, legend, data label, and tooltip to display additional information about the data plotted in the chart.
+
+```dart
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: Center(
+        child: Container(
+          child: SfCartesianChart(
+
+            primaryXAxis: CategoryAxis(),
+            // Chart title
+            title: ChartTitle(text: 'Half yearly sales analysis'),
+            // Enable legend
+            legend: Legend(isVisible: true),
+            // Enable tooltip
+            tooltipBehavior: TooltipBehavior(enable: true),
+
+            series: <LineSeries<SalesData, String>>[
+              LineSeries<SalesData, String>(
+                dataSource:  <SalesData>[
+                  SalesData('Jan', 35),
+                  SalesData('Feb', 28),
+                  SalesData('Mar', 34),
+                  SalesData('Apr', 32),
+                  SalesData('May', 40)
+                ],
+                xValueMapper: (SalesData sales, _) => sales.year,
+                yValueMapper: (SalesData sales, _) => sales.sales,
+                // Enable data label
+                dataLabelSettings: DataLabelSettings(isVisible: true)
+              )
+            ]
+          )
+        )
+      )
+  );
+}
+```
+
+The following screenshot illustrates the result of the above code sample.
+
+![simple line chart](https://cdn.syncfusion.com/content/images/FTControl/simple-line-chart.gif)
 
 ## Support and Feedback
 
